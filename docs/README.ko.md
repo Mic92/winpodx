@@ -234,6 +234,23 @@ openSUSE, Fedora, Debian/Ubuntu, RHEL 계열, Arch 지원.
 환경변수는 `curl | bash` 에서도 동작하므로
 `WINPODX_SKIP_DEPS=1 curl ... | bash` 형태 사용 가능.
 
+**Nix** — NixOS / nix 사용자를 위한 flake 제공:
+
+```bash
+# 설치 없이 바로 실행
+nix run github:kernalix7/winpodx
+
+# 프로필에 설치
+nix profile install github:kernalix7/winpodx
+
+# flake input 으로 사용
+inputs.winpodx.url = "github:kernalix7/winpodx";
+```
+
+래퍼가 FreeRDP, podman / podman-compose, iproute2, libnotify 를 번들로
+포함하므로 기본 podman 백엔드는 추가 설정 없이 동작합니다. docker 및
+libvirt 백엔드는 해당 도구가 호스트에 별도 설치되어 있어야 합니다.
+
 **원 라인 삭제** — 파이프 실행에서는 `--confirm` 또는 `--purge` 플래그가 필수입니다
 (bash 가 curl 의 stdin 을 소비 중이라 대화형 프롬프트가 터미널을 읽을 수 없음):
 
@@ -446,7 +463,7 @@ vnc_port = 8007
 auto_start = true                                # 앱 실행 시 자동 팟 시작
 idle_timeout = 0                                 # 자동 일시정지 (초, 0 = 비활성화)
 boot_timeout = 300                               # 최초 부팅 무인 설치 대기 시간 (초)
-image = "ghcr.io/dockur/windows:latest"          # 컨테이너 이미지 (에어갭 미러 지정 가능)
+image = "docker.io/dockurr/windows:latest"          # 컨테이너 이미지 (에어갭 미러 지정 가능)
 disk_size = "64G"                                # dockur 에 전달되는 가상 디스크 크기
 ```
 

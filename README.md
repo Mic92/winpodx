@@ -283,6 +283,24 @@ for machines with no registry / package-repo access:
 Env vars are honored even under `curl | bash`, so
 `WINPODX_SKIP_DEPS=1 curl ... | bash` works.
 
+**Nix** — a flake is provided for NixOS / nix-on-any-distro users:
+
+```bash
+# Run directly without installing
+nix run github:kernalix7/winpodx
+
+# Install into your profile
+nix profile install github:kernalix7/winpodx
+
+# As a flake input
+inputs.winpodx.url = "github:kernalix7/winpodx";
+```
+
+The wrapper bundles FreeRDP, podman / podman-compose, iproute2 and
+libnotify, so the default podman backend works out of the box. The
+docker and libvirt backends still require the respective tools to be
+present on the host.
+
 **One-line uninstall** — `--confirm` or `--purge` is required under pipe
 (the interactive prompts can't read from a terminal while bash consumes
 stdin from curl):
@@ -498,7 +516,7 @@ vnc_port = 8007
 auto_start = true                                # Start pod automatically when launching an app
 idle_timeout = 0                                 # Seconds before auto-suspend (0 = disabled)
 boot_timeout = 300                               # Seconds to wait for first-boot unattended install
-image = "ghcr.io/dockur/windows:latest"          # Container image (override for air-gapped mirror)
+image = "docker.io/dockurr/windows:latest"          # Container image (override for air-gapped mirror)
 disk_size = "64G"                                # Virtual disk size passed to dockur
 ```
 
